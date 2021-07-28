@@ -103,7 +103,7 @@ Toolkit.run(async (tools) => {
 
     let fileContent = fs.readFileSync(gradlePath);
 
-    console.log(versionNameRegexPattern.exec(fileContent)[0].replace("versionName ", "").replaceAll("\"", ""));
+    console.log(versionNameRegexPattern.exec(fileContent)[0].replace("versionName ", "").replace("\"", "").replace("\"", ""));
     console.log(versionCodeRegexPattern.exec(fileContent)[0].replace("versionCode ", ""));
 
     let currentVersionName = semver.clean(versionNameRegexPattern.exec(fileContent)[0].replace("versionName ", "").replaceAll("\"", ""))
