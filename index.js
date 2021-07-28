@@ -106,7 +106,7 @@ Toolkit.run(async (tools) => {
     console.log(versionNameRegexPattern.exec(fileContent)[0].replace("versionName ", "").replace("\"", "").replace("\"", ""));
     console.log(versionCodeRegexPattern.exec(fileContent)[0].replace("versionCode ", ""));
 
-    let currentVersionName = semver.clean(versionNameRegexPattern.exec(fileContent)[0].replace("versionName ", "").replaceAll("\"", ""))
+    let currentVersionName = semver.clean(versionNameRegexPattern.exec(fileContent)[0].replace("versionName ", "").replace("\"", "").replace("\"", ""))
     let currentVersionCode = versionCodeRegexPattern.exec(fileContent)[0].replace("versionCode ", "");
     console.log(`Current version: ${currentVersionName}`);
     let newVersionName = semver.inc(currentVersionName, version);
