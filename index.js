@@ -5,16 +5,22 @@ const fs = require('fs');
 const semver2int = require('semver2int');
 
 // Change working directory if user defined GRADLE-PATH
+/*
 if (process.env.GRADLE_PATH) {
     process.env.GITHUB_WORKSPACE = `${process.env.GITHUB_WORKSPACE}/${process.env.GRADLE_PATH}`;
     process.chdir(process.env.GITHUB_WORKSPACE);
-}
+}*/
 
 const gradlePath = core.getInput('GRADLE_PATH');
 
 // Run your GitHub Action!
 Toolkit.run(async (tools) => {
     const event = tools.context.payload;
+
+    if (!fs.existsSync(gradlePath)) {
+        tools.exit.failure("GRADLE_PATH is invalid, no file found!")
+        return;
+    }
 
     console.log("Selecting bump type based on commits message..")
 
