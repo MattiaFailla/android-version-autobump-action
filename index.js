@@ -1,5 +1,4 @@
 const {Toolkit} = require('actions-toolkit');
-const {execSync} = require('child_process');
 const core = require('@actions/core');
 const semver = require('semver')
 const fs = require('fs');
