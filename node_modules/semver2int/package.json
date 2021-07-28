@@ -1,0 +1,26 @@
+{
+  "name": "semver2int",
+  "version": "0.0.1",
+  "description": "convert a semver string to an integer for simple comparisons",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "keywords": [
+    "semver",
+    "int",
+    "number",
+    "convert",
+    "compare"
+  ],
+  "author": "Eli Dupuis <elidupuis@gmail.com>",
+  "repository" : {
+      "type" : "git",
+      "url" : "https://github.com/elidupuis/semver2int.git"
+  },
+  "bugs": "https://github.com/elidupuis/semver2int/issues",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.2.1"
+  }
+}

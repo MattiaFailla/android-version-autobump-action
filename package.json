@@ -1,0 +1,26 @@
+{
+  "name": "gh-actions",
+  "version": "1.0.0",
+  "description": "Automatically bump android project version when merging to production",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MattiaFailla/android-version-autobump-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MattiaFailla/android-version-autobump-action/issues"
+  },
+  "homepage": "https://github.com/MattiaFailla/android-version-autobump-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "@actions/github": "^5.0.0",
+    "semver": "^7.3.5",
+    "semver2int": "^0.0.1"
+  }
+}

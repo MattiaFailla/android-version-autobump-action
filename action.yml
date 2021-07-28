@@ -1,0 +1,55 @@
+name: 'Autobump android version'
+description: 'Automatically bump android project version when merging to production'
+inputs:
+  tag-prefix:
+    description: 'Prefix that is used for the git tag'
+    default: ''
+    required: false
+  minor-wording:
+    description: 'Words list that trigger a minor version bump'
+    default: 'feat,minor'
+    required: false
+  major-wording:
+    description: 'Words list that trigger a major version bump'
+    default: 'BREAKING CHANGE,major'
+    required: false
+  patch-wording:
+    description: 'Words list that trigger a patch version bump'
+    required: false
+  rc-wording:
+    description: 'Words list that trigger a rc version bump'
+    default: 'pre-alpha,pre-beta,pre-rc'
+    required: false
+  skip-tag:
+    description: 'Avoid to add a TAG to the version update commit'
+    default: 'false'
+    required: false
+  GRADLE_PATH:
+    description: 'Custom dir to the gradle file'
+    default: ''
+    required: true
+  default:
+    description: 'Set a default version bump to use'
+    default: 'patch'
+    required: false
+  preid:
+    description: 'Set a custom preid for prerelease build'
+    default: 'rc'
+    required: false
+  commit-message:
+    description: 'Set a custom commit message for version bump commit'
+    default: ''
+    required: false
+  push:
+    description: 'Set to false to skip pushing the new tag'
+    default: 'true'
+    required: false
+outputs:
+  newTag:
+    description: 'The newly created tag'
+runs:
+  using: "node12"
+  main: "index.js"
+branding:
+  color: 'blue'
+  icon: 'anchor'
