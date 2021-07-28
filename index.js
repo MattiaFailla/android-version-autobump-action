@@ -5,11 +5,11 @@ const fs = require('fs');
 const semver2int = require('semver2int');
 
 // Change working directory if user defined GRADLE-PATH
-/*
+
 if (process.env.GRADLE_PATH) {
     process.env.GITHUB_WORKSPACE = `${process.env.GITHUB_WORKSPACE}/${process.env.GRADLE_PATH}`;
     process.chdir(process.env.GITHUB_WORKSPACE);
-}*/
+}
 
 const gradlePath = core.getInput('GRADLE_PATH');
 
@@ -127,12 +127,12 @@ Toolkit.run(async (tools) => {
     // GIT logic
     try {
         // set git user
-        await tools.runInWorkspace('git', [
+        await tools.exec('git', [
             'config',
             'user.name',
             `"${process.env.GITHUB_USER || 'Autobump android version'}"`,
         ]);
-        await tools.runInWorkspace('git', [
+        await tools.exec('git', [
             'config',
             'user.email',
             `"${process.env.GITHUB_EMAIL || 'gh-action-bump--android-version@users.noreply.github.com'}"`,
@@ -157,20 +157,20 @@ Toolkit.run(async (tools) => {
 
         // Committing
         newVersion = `${tagPrefix}${newVersionName}`;
-        await tools.runInWorkspace('git', ['commit', '-a', '-m', commitMessage.replace(/{{version}}/g, newVersion)]);
+        await tools.exec('git', ['commit', '-a', '-m', commitMessage.replace(/{{version}}/g, newVersion)]);
 
         // now go to the actual branch to perform the same versioning
         if (isPullRequest) {
             // First fetch to get updated local version of branch
-            await tools.runInWorkspace('git', ['fetch']);
+            await tools.exec('git', ['fetch']);
         }
-        await tools.runInWorkspace('git', ['checkout', currentBranch]);
+        await tools.exec('git', ['checkout', currentBranch]);
         fs.writeFileSync(gradlePath, newFileContent);
         newVersion = `${tagPrefix}${newVersionName}`;
         console.log(`::set-output name=newTag::${newVersion}`);
         try {
             // to support "actions/checkout@v1"
-            await tools.runInWorkspace('git', ['commit', '-a', '-m', commitMessage.replace(/{{version}}/g, newVersion)]);
+            await tools.exec('git', ['commit', '-a', '-m', commitMessage.replace(/{{version}}/g, newVersion)]);
         } catch (e) {
             console.warn(
                 'git commit failed because you are using "actions/checkout@v2"; ' +
@@ -180,11 +180,11 @@ Toolkit.run(async (tools) => {
 
         const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
         if (process.env['INPUT_SKIP-TAG'] !== 'true') {
-            await tools.runInWorkspace('git', ['tag', newVersion]);
-            await tools.runInWorkspace('git', ['push', remoteRepo, '--follow-tags']);
-            await tools.runInWorkspace('git', ['push', remoteRepo, '--tags']);
+            await tools.exec('git', ['tag', newVersion]);
+            await tools.exec('git', ['push', remoteRepo, '--follow-tags']);
+            await tools.exec('git', ['push', remoteRepo, '--tags']);
         } else {
-            await tools.runInWorkspace('git', ['push', remoteRepo]);
+            await tools.exec('git', ['push', remoteRepo]);
         }
     } catch (e) {
         tools.log.fatal(e);
